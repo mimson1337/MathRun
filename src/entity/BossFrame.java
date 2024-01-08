@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class BossFrame extends JFrame implements ActionListener {
     JButton button1, button2, button3;
@@ -53,6 +54,28 @@ public class BossFrame extends JFrame implements ActionListener {
         panel.add(backgroundLabel);
 
 
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        String formattedPlayerPoints = decimalFormat.format(playerPoints);
+        String formattedBossPoints = decimalFormat.format(bossPoints);
+
+        JLabel playerPointsLabel = new JLabel("" + formattedPlayerPoints);
+        JLabel bossPointsLabel = new JLabel("" + formattedBossPoints);
+        playerPointsLabel.setForeground(Color.BLACK);
+        bossPointsLabel.setForeground(Color.BLACK);
+
+        Font font = new Font("Arial", Font.PLAIN, 70); // Przykładowa czcionka (możesz dostosować)
+        playerPointsLabel.setFont(font);
+       bossPointsLabel.setFont(font);
+
+// Ustawienie pozycji etykiet
+        bossPointsLabel.setBounds(300, 550, 250, 100);
+        playerPointsLabel.setBounds(850, 550, 250, 100);
+
+// Dodanie etykiet do panelu
+        backgroundLabel.add(playerPointsLabel);
+        backgroundLabel.add(bossPointsLabel);
+
         button1 = new JButton(new ImageIcon(image5));
         button2 = new JButton(new ImageIcon(image4));
         button3 = new JButton(new ImageIcon(image3));
@@ -76,6 +99,7 @@ public class BossFrame extends JFrame implements ActionListener {
         add(panel);
         setLocationRelativeTo(null);
         setVisible(true);
+
 
 
     }
