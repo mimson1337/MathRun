@@ -24,10 +24,13 @@ public class BossFrame extends JFrame implements ActionListener {
         setResizable(false);
 
         JLabel backgroundLabel;
-        BufferedImage image1, image2;
+        BufferedImage image1, image2, image3, image4, image5;
         try {
             image1 = ImageIO.read(getClass().getResourceAsStream("/title/outcome1.png"));
             image2 = ImageIO.read(getClass().getResourceAsStream("/title/outcome6.png"));
+            image3 = ImageIO.read(getClass().getResourceAsStream("/title/back_to_menu.png"));
+            image4 = ImageIO.read(getClass().getResourceAsStream("/title/next_level.png"));
+            image5 = ImageIO.read(getClass().getResourceAsStream("/title/retry_level.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -50,9 +53,9 @@ public class BossFrame extends JFrame implements ActionListener {
         panel.add(backgroundLabel);
 
 
-        button1 = new JButton("Powtórz poziom");
-        button2 = new JButton("Następny poziom");
-        button3 = new JButton("Menu główne");
+        button1 = new JButton(new ImageIcon(image5));
+        button2 = new JButton(new ImageIcon(image4));
+        button3 = new JButton(new ImageIcon(image3));
 
         button1.addActionListener(this);
         button2.addActionListener(this);
