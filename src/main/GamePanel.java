@@ -31,7 +31,6 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     //CZAS
     Thread gameThread;
-    public CollisionChecker cChecker = new CollisionChecker(this);
     Player player = new Player(this, keyHandler);
     Boss boss = new Boss(this);
     Background background = new Background(this);

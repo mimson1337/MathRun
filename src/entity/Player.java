@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 
 public class Player extends Entity{
@@ -17,8 +18,6 @@ public class Player extends Entity{
     public Player(GamePanel gp, KeyHandler keyHandler){
         this.gp =gp;
         this.keyHandler = keyHandler;
-
-        //solidArea = new Rectangle(0,0, gp.tileSize, gp.tileSize);
 
         setDefaultValues();
         getPlayerImage();
@@ -45,24 +44,7 @@ public class Player extends Entity{
             e.printStackTrace();
         }
     }
-//    public static double updatePoints(double points) {
-//        // Zaktualizuj punkty gracza
-//        playerPoints = points;
-//        return playerPoints;
-//    }
 
-
-//   public static boolean collidesWith(Obstacle mathObject) {
-////        // Sprawdź kolizję gracza z obiektem matematycznym
-////        // ...
-////        if((playerX>=ObstacleX)&&(playerX<=ObstacleX+20)&&(playerY=ObstacleY)) {
-////        collision= true;
-////        }
-////        else{
-////            collision=false;
-////        }
-////
-//    }
 public static boolean collidesWith(Obstacle obstacle) {
 
     // Sprawdź kolizję prostokątów
@@ -70,17 +52,7 @@ public static boolean collidesWith(Obstacle obstacle) {
      // Brak kolizji
 }
 
-//    int obstacleX = obstacle.ObstacleX;
-//    int obstacleY = obstacle.ObstacleY;
-//    int playerX = Player.playerX;
-//    int playerY = Player.playerY;
-//    int obstacleWidth = 100;  // Przykładowa szerokość przeszkody
-//    int obstacleHeight = 20; // Przykładowa wysokość przeszkody
-
     public void update() {
-//x>320 && x< 960
-//        if (obstacleCount >= 9)
-//            System.out.println("");
         spriteCounterNumber = switch (gp.gameLevel) {
             case 1 -> 16;
             case 2 -> 12;
@@ -114,7 +86,6 @@ public static boolean collidesWith(Obstacle obstacle) {
                         playerX = 880;
                     }
 
-                    gp.cChecker.checkTile(this);
 
                     spriteCounter++;
                     if (spriteCounter > spriteCounterNumber) {
@@ -140,7 +111,6 @@ public static boolean collidesWith(Obstacle obstacle) {
             }
         }
         else if(gp.obstacleCount == 10){
-//            playerX = 600;
             direction = "run";
             spriteCounter++;
             if(playerY > 600) {
@@ -188,34 +158,6 @@ public static boolean collidesWith(Obstacle obstacle) {
             else{
                 direction = "rest";
             }
-//            spriteCounter++;
-//            if (spriteCounter > 24) {
-//                if (spriteNum == 1) {
-//                    spriteNum = 2;
-//                    playerY = 790;
-//                } else if (spriteNum == 2) {
-//                    spriteNum = 3;
-//                    playerY = 770;
-//                }else if (spriteNum == 3) {
-//                    spriteNum = 4;
-//                    playerY = 750;
-//                }else if (spriteNum == 4) {
-//                    spriteNum = 5;
-//                    playerY = 730;
-//                }else if (spriteNum == 5) {
-//                    spriteNum = 6;
-//                    playerY = 700;
-//                }
-//
-//            }
-//            int[] playerYValues = {790, 770, 750, 730, 700};
-//
-//            for (spriteCounter = 0; spriteCounter < 24; spriteCounter++) {
-//                spriteNum++;
-//
-//                playerY = playerYValues[spriteNum];
-//            }
-
         }
         };
 
@@ -232,9 +174,6 @@ public static boolean collidesWith(Obstacle obstacle) {
     }
 
     public void draw(Graphics2D g2){
-        //g2.setColor(Color.white);
-
-        //g2.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
         switch (direction){
             case "rest":
@@ -264,14 +203,6 @@ public static boolean collidesWith(Obstacle obstacle) {
                     image = straight2;
                 }
                 break;
-//            case "boss":
-//                if(spriteNum == 1) {
-//                    image = straight1;
-//                }
-//                if(spriteNum == 6){
-//                    image = straight2;
-//                }
-//                break;
         }
         Font font = new Font("Arial", Font.PLAIN, 70); // Przykładowa czcionka (możesz dostosować)
         g2.setFont(font);
@@ -281,8 +212,18 @@ public static boolean collidesWith(Obstacle obstacle) {
 
         // Narysuj punkty gracza na panelu gry
         imageDraw(g2);
-        String playerPointsText = "" + gp.playerPoints;
-        g2.drawString(playerPointsText, 120, 420); // Dostosuj położenie tekstu
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        String playerPointsText = decimalFormat.format(gp.playerPoints);
+
+        // Pobierz szerokość i wysokość tekstu
+        FontMetrics fontMetrics = g2.getFontMetrics();
+        int textWidth = fontMetrics.stringWidth(playerPointsText);
+        int textHeight = fontMetrics.getHeight();
+
+        // Oblicz nowe pozycje, aby umieścić tekst w centrum
+        int num = 130 + (gp.tileSize - textWidth) / 2;
+        int num1 = 420 + (gp.tileSize - textHeight) / 2;
+        g2.drawString(playerPointsText, num, num1); // Dostosuj położenie tekstu
         g2.drawImage(image, playerX, playerY, gp.tileSize, gp.tileSize, null);
     }
 }
