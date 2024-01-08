@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyHandler;
@@ -16,14 +17,16 @@ public class Player extends Entity{
         this.gp =gp;
         this.keyHandler = keyHandler;
 
+        //solidArea = new Rectangle(0,0, gp.tileSize, gp.tileSize);
+
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues(){
-        x = 640;
-        y = 800;
-        speed = 4;
+        playerX = 600;
+        playerY = 800;
+        speed = 3;
         direction = "rest";
     }
     public void getPlayerImage(){
@@ -34,38 +37,187 @@ public class Player extends Entity{
             left2= ImageIO.read(getClass().getResourceAsStream("/player/gracz_lewo_2.png"));
             right1= ImageIO.read(getClass().getResourceAsStream("/player/gracz_prawo_1.png"));
             right2= ImageIO.read(getClass().getResourceAsStream("/player/gracz_prawo_2.png"));
+            straight1= ImageIO.read(getClass().getResourceAsStream("/player/gracz_przod1.png"));
+            straight2= ImageIO.read(getClass().getResourceAsStream("/player/gracz_przod2.png"));
         }
         catch (IOException e){
             e.printStackTrace();
         }
     }
-    public void update(){
+//    public static double updatePoints(double points) {
+//        // Zaktualizuj punkty gracza
+//        playerPoints = points;
+//        return playerPoints;
+//    }
 
-        if(keyHandler.leftPressed == true || keyHandler.rightPressed == true) {
-            if (keyHandler.rightPressed == true) {
-                x += speed;
-                direction = "right";
 
-            } else if (keyHandler.leftPressed == true) {
-                x -= speed;
-                direction = "left";
-            }
+//   public static boolean collidesWith(Obstacle mathObject) {
+////        // Sprawdź kolizję gracza z obiektem matematycznym
+////        // ...
+////        if((playerX>=ObstacleX)&&(playerX<=ObstacleX+20)&&(playerY=ObstacleY)) {
+////        collision= true;
+////        }
+////        else{
+////            collision=false;
+////        }
+////
+//    }
+public static boolean collidesWith(Obstacle obstacle) {
 
-            spriteCounter++;
-            if (spriteCounter > 12) {
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                } else if (spriteNum == 2) {
-                    spriteNum = 1;
+    // Sprawdź kolizję prostokątów
+    return (playerX < obstacle.ObstacleX + 220 && playerX > obstacle.ObstacleX && playerY == obstacle.ObstacleY);
+     // Brak kolizji
+}
+
+//    int obstacleX = obstacle.ObstacleX;
+//    int obstacleY = obstacle.ObstacleY;
+//    int playerX = Player.playerX;
+//    int playerY = Player.playerY;
+//    int obstacleWidth = 100;  // Przykładowa szerokość przeszkody
+//    int obstacleHeight = 20; // Przykładowa wysokość przeszkody
+
+    public void update() {
+//x>320 && x< 960
+//        if (obstacleCount >= 9)
+//            System.out.println("");
+        spriteCounterNumber = switch (gp.gameLevel) {
+            case 1 -> 24;
+            case 2 -> 18;
+            case 3 -> 12;
+            default -> 0;
+        };
+        if (gp.obstacleCount < 10) {
+            if (!gp.gameStarted) {
+                direction = "rest";
+                if (keyHandler.leftPressed || keyHandler.rightPressed) {
+                    gp.gameStarted = true;
                 }
-                spriteCounter = 0;
+            } else {
+                if (keyHandler.leftPressed || keyHandler.rightPressed) {
+                    gp.gameStarted = true;
+
+                    if (keyHandler.rightPressed == true) {
+                        playerX += speed;
+                        direction = "right";
+
+                    } else if (keyHandler.leftPressed == true) {
+                        playerX -= speed;
+                        direction = "left";
+                    }
+
+
+                    //collision
+                    if (playerX < 320) {
+                        playerX = 320;
+                    } else if (playerX > 880) {
+                        playerX = 880;
+                    }
+
+                    gp.cChecker.checkTile(this);
+
+                    spriteCounter++;
+                    if (spriteCounter > spriteCounterNumber) {
+                        if (spriteNum == 1) {
+                            spriteNum = 2;
+                        } else if (spriteNum == 2) {
+                            spriteNum = 1;
+                        }
+                        spriteCounter = 0;
+                    }
+                } else {
+                    direction = "run";
+                    spriteCounter++;
+                    if (spriteCounter > spriteCounterNumber) {
+                        if (spriteNum == 1) {
+                            spriteNum = 2;
+                        } else if (spriteNum == 2) {
+                            spriteNum = 1;
+                        }
+                        spriteCounter = 0;
+                    }
+                }
             }
         }
-        else{
-            direction = "rest";
-        }
+        else if(gp.obstacleCount == 10){
+//            playerX = 600;
+            direction = "run";
+            spriteCounter++;
+            if(playerY > 600) {
+                if(playerX == 600) {
+                    if (spriteCounter > 12) {
+                        if (spriteNum == 1) {
+                            spriteNum = 2;
+                            playerY -= 5;
+                        } else if (spriteNum == 2) {
+                            spriteNum = 1;
+                            playerY -= 5;
+                        }
+                        spriteCounter = 0;
+                    }
+                }
+                if(playerX > 600) {
+                    if (spriteCounter > 12) {
+                        if (spriteNum == 1) {
+                            spriteNum = 2;
+                            playerY -= 5;
+                            playerX -= 5;
+                        } else if (spriteNum == 2) {
+                            spriteNum = 1;
+                            playerY -= 5;
+                            playerX -= 5;
+                        }
+                        spriteCounter = 0;
+                    }
+                }
+                if(playerX < 600) {
+                    if (spriteCounter > 12) {
+                        if (spriteNum == 1) {
+                            spriteNum = 2;
+                            playerY -= 5;
+                            playerX += 5;
+                        } else if (spriteNum == 2) {
+                            spriteNum = 1;
+                            playerY -= 5;
+                            playerX += 5;
+                        }
+                        spriteCounter = 0;
+                    }
+                }
+            }
+            else{
+                direction = "rest";
+            }
+//            spriteCounter++;
+//            if (spriteCounter > 24) {
+//                if (spriteNum == 1) {
+//                    spriteNum = 2;
+//                    playerY = 790;
+//                } else if (spriteNum == 2) {
+//                    spriteNum = 3;
+//                    playerY = 770;
+//                }else if (spriteNum == 3) {
+//                    spriteNum = 4;
+//                    playerY = 750;
+//                }else if (spriteNum == 4) {
+//                    spriteNum = 5;
+//                    playerY = 730;
+//                }else if (spriteNum == 5) {
+//                    spriteNum = 6;
+//                    playerY = 700;
+//                }
+//
+//            }
+//            int[] playerYValues = {790, 770, 750, 730, 700};
+//
+//            for (spriteCounter = 0; spriteCounter < 24; spriteCounter++) {
+//                spriteNum++;
+//
+//                playerY = playerYValues[spriteNum];
+//            }
 
-    }
+        }
+        };
+
     public void draw(Graphics2D g2){
         //g2.setColor(Color.white);
 
@@ -91,7 +243,32 @@ public class Player extends Entity{
                     image = right2;
                 }
                 break;
+            case "run":
+                if(spriteNum == 1) {
+                    image = straight1;
+                }
+                if(spriteNum == 2){
+                    image = straight2;
+                }
+                break;
+//            case "boss":
+//                if(spriteNum == 1) {
+//                    image = straight1;
+//                }
+//                if(spriteNum == 6){
+//                    image = straight2;
+//                }
+//                break;
         }
-        g2.drawImage(image,x,y, gp.tileSize, gp.tileSize, null);
+        Font font = new Font("Arial", Font.PLAIN, 20); // Przykładowa czcionka (możesz dostosować)
+        g2.setFont(font);
+
+        // Ustaw kolor tekstu
+        g2.setColor(Color.WHITE); // Przykładowy kolor (możesz dostosować)
+
+        // Narysuj punkty gracza na panelu gry
+        String playerPointsText = "Player Points: " + gp.playerPoints;
+        g2.drawString(playerPointsText, 10, 20); // Dostosuj położenie tekstu
+        g2.drawImage(image, playerX, playerY, gp.tileSize, gp.tileSize, null);
     }
 }
