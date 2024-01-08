@@ -128,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
             isFinished = false;
             BossFrame bossFrame = new BossFrame(this, bossPoints, playerPoints);
             //window1.add(bossFrame);
+            bossFrame.setSize(screenWidth, screenHeight);
             bossFrame.setVisible(true);
             bossFrame.setLocationRelativeTo(null);
         }

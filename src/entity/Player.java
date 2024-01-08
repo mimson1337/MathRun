@@ -48,7 +48,7 @@ public class Player extends Entity{
 public static boolean collidesWith(Obstacle obstacle) {
 
     // Sprawdź kolizję prostokątów
-    return (playerX < obstacle.ObstacleX + 220 && playerX > obstacle.ObstacleX && playerY == obstacle.ObstacleY);
+    return (playerX < obstacle.ObstacleX + 260 && playerX > obstacle.ObstacleX && playerY == obstacle.ObstacleY);
      // Brak kolizji
 }
 

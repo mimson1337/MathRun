@@ -84,7 +84,7 @@ public class LevelSelectionFrame extends JFrame implements ActionListener {
         setResizable(false);
 
         this.gamePanel = gp;
-        BufferedImage image, image1, image2, image3, image4 = null;
+        BufferedImage image, image1, image2, image3, image4;
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/title/Title.png"));
             image1 = ImageIO.read(getClass().getResourceAsStream("/title/poziom_1.png"));
