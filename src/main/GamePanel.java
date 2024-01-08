@@ -2,10 +2,13 @@ package main;
 
 import entity.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -43,14 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean isFinished = false;
 
 
-
-
-
     public GamePanel(){
-//        super();
-
-//        super.setSize(400,600);
-//        super.setVisible(true);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -162,4 +158,5 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     }
+
 }

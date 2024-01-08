@@ -4,6 +4,7 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -218,6 +219,18 @@ public static boolean collidesWith(Obstacle obstacle) {
         }
         };
 
+    public void imageDraw(Graphics2D g2) {
+        BufferedImage imagez;
+        try {
+            imagez = ImageIO.read(getClass().getResourceAsStream("/title/punkty_gracza.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Narysuj obrazek na (0, 0) bez tworzenia nowego panelu
+        g2.drawImage(imagez, 0, 0, null);
+    }
+
     public void draw(Graphics2D g2){
         //g2.setColor(Color.white);
 
@@ -260,15 +273,16 @@ public static boolean collidesWith(Obstacle obstacle) {
 //                }
 //                break;
         }
-        Font font = new Font("Arial", Font.PLAIN, 20); // Przykładowa czcionka (możesz dostosować)
+        Font font = new Font("Arial", Font.PLAIN, 70); // Przykładowa czcionka (możesz dostosować)
         g2.setFont(font);
 
         // Ustaw kolor tekstu
         g2.setColor(Color.WHITE); // Przykładowy kolor (możesz dostosować)
 
         // Narysuj punkty gracza na panelu gry
-        String playerPointsText = "Player Points: " + gp.playerPoints;
-        g2.drawString(playerPointsText, 10, 20); // Dostosuj położenie tekstu
+        imageDraw(g2);
+        String playerPointsText = "" + gp.playerPoints;
+        g2.drawString(playerPointsText, 120, 420); // Dostosuj położenie tekstu
         g2.drawImage(image, playerX, playerY, gp.tileSize, gp.tileSize, null);
     }
 }
