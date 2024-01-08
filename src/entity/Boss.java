@@ -12,6 +12,7 @@ import java.util.Random;
 public class Boss extends Entity{
     GamePanel gp;
     int bossX, bossY;
+
     public Boss(GamePanel gp){
         this.gp =gp;
 
@@ -46,7 +47,7 @@ public class Boss extends Entity{
             direction = "run";
             spriteCounter++;
             if(bossY<400) {
-                if (spriteCounter > 8) {
+                if (spriteCounter > 3) {
                     if (spriteNum == 1) {
                         spriteNum = 2;
                         bossY += 5;
@@ -59,10 +60,14 @@ public class Boss extends Entity{
             }
             else {
                 direction = "rest";
+                gp.isFinished = true;
+
             }
 
         }
     };
+
+
     public void drawBoss(Graphics2D g2) {
         BufferedImage image = null;
         if (gp.obstacleCount == 10) {

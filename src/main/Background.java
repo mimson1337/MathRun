@@ -43,9 +43,9 @@ public class Background extends Entity {
     }
      public void updateBackground() {
          spriteCounterNumber = switch (gp.gameLevel) {
-             case 1 -> 24;
-             case 2 -> 18;
-             case 3 -> 12;
+             case 1 -> 16;
+             case 2 -> 12;
+             case 3 -> 8;
              default -> 0;
          };
          if(gp.obstacleCount < 10) {

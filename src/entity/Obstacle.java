@@ -14,7 +14,7 @@ import java.util.Random;
 public class Obstacle extends Entity {
     GamePanel gp;
     String equation;
-    double multiply, subtract, add, divide, number;
+    double number =0;
     int ObstacleX;
     int ObstacleY;
 
@@ -86,7 +86,7 @@ public class Obstacle extends Entity {
     public double getRandomNumber() {
         // Przykładowa metoda generująca losowe równanie matematyczne
         Random random = new Random();
-        number = random.nextInt(3) + 2;
+        number = random.nextInt(8) + 2;
         return number;
     }
 

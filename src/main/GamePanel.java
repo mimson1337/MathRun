@@ -1,9 +1,6 @@
 package main;
 
-import entity.Boss;
-import entity.Entity;
-import entity.Obstacle;
-import entity.Player;
+import entity.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,15 +35,16 @@ public class GamePanel extends JPanel implements Runnable{
     Obstacle obstacle = new Obstacle(this);
     public boolean gameStarted = false;
     public int gameLevel;
-
-    Button button1,button2,button3;
+    JPanel window1 = new JPanel();
     public int ObstacleSpeed;
     public int obstacleCount = 0;
-    public int bossPoints;
+    public int bossPoints =0;
     public static double playerPoints = 1;
+    public boolean isFinished = false;
 
 
-    
+
+
 
     public GamePanel(){
 //        super();
@@ -95,13 +93,13 @@ public class GamePanel extends JPanel implements Runnable{
 
         switch (gameLevel) {
             case 1:
-                ObstacleSpeed = 2;
+                ObstacleSpeed = 8;
                 break;
             case 2:
-                ObstacleSpeed = 4;
+                ObstacleSpeed = 10;
                 break;
             case 3:
-                ObstacleSpeed = 8;
+                ObstacleSpeed = 16;
                 break;
         }
 
@@ -110,24 +108,34 @@ public class GamePanel extends JPanel implements Runnable{
             while (gameThread != null) {
 
 
-                    update();
+                update();
 
-                    repaint();
+                repaint();
 
 
-                    try {
-                        double remainingTime = nextDrawTime - System.nanoTime();
-                        remainingTime = remainingTime / 1000000;
-                        if (remainingTime < 0) {
-                            remainingTime = 0;
-                        }
-                        Thread.sleep((long) remainingTime);
-                        nextDrawTime += drawInterval;
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                try {
+                    double remainingTime = nextDrawTime - System.nanoTime();
+                    remainingTime = remainingTime / 1000000;
+                    if (remainingTime < 0) {
+                        remainingTime = 0;
                     }
+                    Thread.sleep((long) remainingTime);
+                    nextDrawTime += drawInterval;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if(isFinished){
+                    gameThread = null;
+                }
 
             }
+        if (isFinished) {
+            BossFrame bossFrame = new BossFrame(this, bossPoints, playerPoints);
+            isFinished = false;
+            //window1.add(bossFrame);
+            bossFrame.setVisible(true);
+            bossFrame.setLocationRelativeTo(null);
+        }
 
 
     }
@@ -137,6 +145,7 @@ public class GamePanel extends JPanel implements Runnable{
         boss.updateBoss();
         obstacle.updateObstacle();
         background.updateBackground();
+
 
     }
 

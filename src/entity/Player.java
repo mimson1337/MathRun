@@ -26,7 +26,7 @@ public class Player extends Entity{
     public void setDefaultValues(){
         playerX = 600;
         playerY = 800;
-        speed = 3;
+        speed = 5;
         direction = "rest";
     }
     public void getPlayerImage(){
@@ -81,9 +81,9 @@ public static boolean collidesWith(Obstacle obstacle) {
 //        if (obstacleCount >= 9)
 //            System.out.println("");
         spriteCounterNumber = switch (gp.gameLevel) {
-            case 1 -> 24;
-            case 2 -> 18;
-            case 3 -> 12;
+            case 1 -> 16;
+            case 2 -> 12;
+            case 3 -> 8;
             default -> 0;
         };
         if (gp.obstacleCount < 10) {
@@ -144,7 +144,7 @@ public static boolean collidesWith(Obstacle obstacle) {
             spriteCounter++;
             if(playerY > 600) {
                 if(playerX == 600) {
-                    if (spriteCounter > 12) {
+                    if (spriteCounter > 5) {
                         if (spriteNum == 1) {
                             spriteNum = 2;
                             playerY -= 5;
@@ -156,7 +156,7 @@ public static boolean collidesWith(Obstacle obstacle) {
                     }
                 }
                 if(playerX > 600) {
-                    if (spriteCounter > 12) {
+                    if (spriteCounter > 5) {
                         if (spriteNum == 1) {
                             spriteNum = 2;
                             playerY -= 5;
@@ -170,7 +170,7 @@ public static boolean collidesWith(Obstacle obstacle) {
                     }
                 }
                 if(playerX < 600) {
-                    if (spriteCounter > 12) {
+                    if (spriteCounter > 5) {
                         if (spriteNum == 1) {
                             spriteNum = 2;
                             playerY -= 5;
