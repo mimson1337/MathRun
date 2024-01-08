@@ -3,7 +3,6 @@ package main;
 import entity.Entity;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -15,19 +14,18 @@ public class Background extends Entity {
     public String road;
     public Background(GamePanel gp){
         this.gp =gp;
-
-
         setBackgroundDefaultValues();
         getBackgroundImage();
-
-
     }
 
+    //ustawienie defaultowych wartosci backgroundu w gamePanel
     public void setBackgroundDefaultValues(){
         worldX = 0;
         worldY = 0;
         road = "roadStart";
     }
+
+    //rysunki potrzebne do animacji tła
     public void getBackgroundImage(){
         try
         {
@@ -41,6 +39,8 @@ public class Background extends Entity {
         e.printStackTrace();
         }
     }
+
+    //update tła, tak jak wczesniej, spriteCounterNumber wykorzystywany dla różnych poziomów po to, aby animacja zwiększała swoja predkosc wraz z zwiekszana predkoscia faktyczna obiektów spadających
      public void updateBackground() {
          spriteCounterNumber = switch (gp.gameLevel) {
              case 1 -> 16;
@@ -69,6 +69,8 @@ public class Background extends Entity {
              }
          }
     }
+
+    //rysowanie tła, znów wykorzystanie buffered image i przede wszystkim spriteNum do animacji
     public void drawBackground(Graphics2D g2){
         BufferedImage image = null;
         switch (road){

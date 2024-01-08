@@ -12,11 +12,9 @@ public class Main {
     public static void main(String[] args) {
         GamePanel gamePanel = new GamePanel();
 
-// Tworzymy okno do wyboru poziomu, przekazując gamePanel jako argument
+// okno do wyboru poziomu, przekazuje gamePanel jako argument
         LevelSelectionFrame levelSelectionFrame = new LevelSelectionFrame(gamePanel);
         levelSelectionFrame.setVisible(true);
-
-        //BossFrame bossFrame = new BossFrame(gamePanel);
 
 // Czekamy, aż użytkownik wybierze poziom
         while (!levelSelectionFrame.isLevelChosen) {

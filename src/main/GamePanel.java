@@ -1,17 +1,10 @@
 package main;
 
 import entity.*;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Random;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -19,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16x16
     final int scale = 5;
-    public final int tileSize = originalTileSize * scale;
+    public final int tileSize = originalTileSize * scale; //5x16=80 czyli gracz jest 80x80
     final int maxScreenCol=16;
     final int maxScreenRow=12;
     public final int screenWidth = tileSize * maxScreenCol; //1280
@@ -29,20 +22,18 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     KeyHandler keyHandler = new KeyHandler();
-    //CZAS
-    Thread gameThread;
+    Thread gameThread;//CZAS
     Player player = new Player(this, keyHandler);
     Boss boss = new Boss(this);
     Background background = new Background(this);
     Obstacle obstacle = new Obstacle(this);
-    public boolean gameStarted = false;
-    public int gameLevel;
-    JPanel window1 = new JPanel();
-    public int ObstacleSpeed;
-    public int obstacleCount = 0;
-    public int bossPoints =0;
-    public static double playerPoints = 1;
-    public boolean isFinished = false;
+    public boolean gameStarted = false; //czy zaczęła się gra
+    public int gameLevel; //poziom gry
+    public int ObstacleSpeed; //predkosc obiektów spadających
+    public int obstacleCount = 0; //ilosc obiektów spadających
+    public int bossPoints =0; //punkty bossa
+    public static double playerPoints = 1; //punkty gracza
+    public boolean isFinished = false; //Czy boss juz skonczył chodzić
 
 
     public GamePanel(){
@@ -81,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
         bossPoints = Math.min(max, Math.max(min, random.nextInt(max - min + 1) + min));
     }
 
+    //w run znajduje się głowna pętla gry posiadająca metode update i paintComponent
     @Override
     public void run() {
             double drawInterval = 1000000000 / FPS;
@@ -124,10 +116,10 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 
             }
+            //boss wyświetla się gdy gra jest zakonczona
         if (isFinished) {
             isFinished = false;
             BossFrame bossFrame = new BossFrame(this, bossPoints, playerPoints);
-            //window1.add(bossFrame);
             bossFrame.setSize(screenWidth, screenHeight);
             bossFrame.setVisible(true);
             bossFrame.setLocationRelativeTo(null);
@@ -155,8 +147,6 @@ public class GamePanel extends JPanel implements Runnable {
         boss.drawBoss(g2);
 
         g2.dispose();
-
-
     }
 
 }

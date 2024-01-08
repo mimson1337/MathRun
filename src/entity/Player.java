@@ -4,7 +4,6 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,13 +21,15 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
     }
-
+//ustawienie defaultowych wartosci dla gracza
     public static void setDefaultValues(){
         playerX = 600;
         playerY = 800;
         speed = 5;
         direction = "rest";
     }
+
+    //rysunki gracza potrzebne do animacji
     public void getPlayerImage(){
 
         try{
@@ -46,13 +47,13 @@ public class Player extends Entity{
     }
 
 public static boolean collidesWith(Obstacle obstacle) {
-
-    // Sprawdź kolizję prostokątów
+    // Sprawdź czy jest kolizja pomiedzy graczem a obiektem i zwróć true lub false
     return (playerX < obstacle.ObstacleX + 260 && playerX > obstacle.ObstacleX && playerY == obstacle.ObstacleY);
-     // Brak kolizji
 }
 
+//update gracza
     public void update() {
+        //spriteCounterNumber potrzebny do animacji - im mniejszy tym szybciej gracz przebiera nogami
         spriteCounterNumber = switch (gp.gameLevel) {
             case 1 -> 16;
             case 2 -> 12;
@@ -69,24 +70,24 @@ public static boolean collidesWith(Obstacle obstacle) {
                 if (keyHandler.leftPressed || keyHandler.rightPressed) {
                     gp.gameStarted = true;
 
-                    if (keyHandler.rightPressed == true) {
+                    if (keyHandler.rightPressed) {
                         playerX += speed;
                         direction = "right";
 
-                    } else if (keyHandler.leftPressed == true) {
+                    } else if (keyHandler.leftPressed) {
                         playerX -= speed;
                         direction = "left";
                     }
 
 
-                    //collision
+                    //ograniczenie pola gracza
                     if (playerX < 320) {
                         playerX = 320;
                     } else if (playerX > 880) {
                         playerX = 880;
                     }
 
-
+                    //pętla potrzebna do animacji, wykorzystywana pozniej w metodzie draw
                     spriteCounter++;
                     if (spriteCounter > spriteCounterNumber) {
                         if (spriteNum == 1) {
@@ -161,6 +162,7 @@ public static boolean collidesWith(Obstacle obstacle) {
         }
         };
 
+    //narysowanie interfejsu graficznego podczas rozgrywki
     public void imageDraw(Graphics2D g2) {
         BufferedImage imagez;
         try {
@@ -169,10 +171,10 @@ public static boolean collidesWith(Obstacle obstacle) {
             throw new RuntimeException(e);
         }
 
-        // Narysuj obrazek na (0, 0) bez tworzenia nowego panelu
         g2.drawImage(imagez, 0, 0, null);
     }
 
+    //petla z rysowaniem i animacja. wykorzystywane sa tu wczesniej wartosci spriteNum oraz uzyto petli switch do okreslenia direction
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         switch (direction){
@@ -204,6 +206,7 @@ public static boolean collidesWith(Obstacle obstacle) {
                 }
                 break;
         }
+        //tekst, przedstawiajacy punktacje gracza
         Font font = new Font("Arial", Font.PLAIN, 70); // Przykładowa czcionka (możesz dostosować)
         g2.setFont(font);
 

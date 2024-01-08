@@ -1,13 +1,12 @@
 package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
+
 
 public class Boss extends Entity{
     GamePanel gp;
@@ -16,12 +15,11 @@ public class Boss extends Entity{
 
     public Boss(GamePanel gp){
         this.gp =gp;
-
-        //solidArea = new Rectangle(0,0, gp.tileSize, gp.tileSize);
-
         setDefaultBossValues();
         getBossImage();
     }
+
+    //defaultowe wartosci dla bossa
     public static void setDefaultBossValues(){
         bossX = 560;
         bossY = 0;
@@ -30,7 +28,7 @@ public class Boss extends Entity{
 
     }
 
-
+    //rysunki bossa potrzebne do animacji(wykorzystane w funkcji drawBoss)
     public void getBossImage(){
 
         try{
@@ -43,11 +41,13 @@ public class Boss extends Entity{
         }
     }
 
+    //petla update boss, ktora odpala sie tylko wtedy gdy pojawia sie 10 obiekt (gp.obstacleCount == 10) oraz to w tej petli wykorzystywany jest bool isFinished
     public void updateBoss() {
         if(gp.obstacleCount == 10){
             bossDirection = "run";
             spriteCounter++;
             if(bossY<400) {
+                //pętla potrzebna do animacji, wykorzystywana pozniej w metodzie draw
                 if (spriteCounter > 3) {
                     if (spriteNum == 1) {
                         spriteNum = 2;
@@ -59,6 +59,7 @@ public class Boss extends Entity{
                     spriteCounter = 0;
                 }
             }
+            //wykorzystanie isFinished, potrzebne do wyswietlenia panelu BossFrame
             else if(bossY==400){
                 bossDirection = "rest";
                 gp.isFinished = true;
@@ -66,12 +67,9 @@ public class Boss extends Entity{
             }
 
         }
-//        else{
-//            direction = "siema";
-//        }
     };
 
-
+    //metoda rysowania bossa - w zaleznosci od spriteNum, wyswietlany jest obrazek(podobnie jak w metodzie draw() w klasie Player)
     public void drawBoss(Graphics2D g2) {
         BufferedImage image = null;
         if (gp.obstacleCount == 10) {
@@ -91,5 +89,4 @@ public class Boss extends Entity{
             g2.drawImage(image, bossX, bossY, 150, 150, null);
         }
     }
-
 }

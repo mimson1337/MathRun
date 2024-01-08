@@ -1,4 +1,3 @@
-
 package entity;
 
 import main.GamePanel;
@@ -21,10 +20,11 @@ public class BossFrame extends JFrame implements ActionListener {
     public BossFrame(GamePanel gp, int bossPoints, double playerPoints) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.gp = gp;
-        //setSize(gp.screenWidth, gp.screenHeight);
         setResizable(false);
 
+        //JLabel potrzebny do wyświetlenia backgroundu outcome1/outcome6
         JLabel backgroundLabel;
+        //zdjęcia tła, jak i przycisków
         BufferedImage image1, image2, image3, image4, image5;
         try {
             image1 = ImageIO.read(getClass().getResourceAsStream("/title/outcome1.png"));
@@ -35,7 +35,7 @@ public class BossFrame extends JFrame implements ActionListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        //petla if potrzebna do okreslenia, jaki jest outcome
         if (bossPoints > playerPoints) {
             ImageIcon imageIcon = new ImageIcon(image1);
             backgroundLabel = new JLabel(imageIcon);
@@ -43,36 +43,33 @@ public class BossFrame extends JFrame implements ActionListener {
             ImageIcon imageIcon = new ImageIcon(image2);
             backgroundLabel = new JLabel(imageIcon);
         }
-
+        //wartosci backgroundLabel oraz dodanie do panelu
         backgroundLabel.setBounds(0, 0, gp.screenWidth, gp.screenHeight);
-
-        System.out.println(bossPoints);
-        System.out.println(playerPoints);
-
-        JPanel panel = new JPanel(new FlowLayout()); // Ustawienie null layout
+        JPanel panel = new JPanel(new FlowLayout());
         panel.setSize(image1.getWidth(), image1.getHeight());
         panel.add(backgroundLabel);
 
-
-
+        //zmienne potrzebne do ograniczenia wyswietlanej liczby do jednej liczby po przecinku. wykorzystywane równiez w klasie player przy wyswietlaniu punktów gracza
         DecimalFormat decimalFormat = new DecimalFormat("#.#");
         String formattedPlayerPoints = decimalFormat.format(playerPoints);
         String formattedBossPoints = decimalFormat.format(bossPoints);
 
+        //wyswietlanie ostatecznych punktów gracza jak i bossa
         JLabel playerPointsLabel = new JLabel("" + formattedPlayerPoints);
         JLabel bossPointsLabel = new JLabel("" + formattedBossPoints);
         playerPointsLabel.setForeground(Color.BLACK);
         bossPointsLabel.setForeground(Color.BLACK);
 
+        //ustawienia czcionki, z jaka wyswietlana sa punkty gracza i bossa
         Font font = new Font("Arial", Font.PLAIN, 70); // Przykładowa czcionka (możesz dostosować)
         playerPointsLabel.setFont(font);
        bossPointsLabel.setFont(font);
 
-// Ustawienie pozycji etykiet
+        // Ustawienie pozycji etykiet
         bossPointsLabel.setBounds(300, 550, 250, 100);
         playerPointsLabel.setBounds(850, 550, 250, 100);
 
-// Dodanie etykiet do panelu
+        // Dodanie etykiet do panelu
         backgroundLabel.add(playerPointsLabel);
         backgroundLabel.add(bossPointsLabel);
 
@@ -100,10 +97,8 @@ public class BossFrame extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setVisible(true);
 
-
-
     }
-
+    //action performed potrzebny do obsługi przycisków
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button1) {
@@ -112,22 +107,26 @@ public class BossFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == button2) {
             startNewLevel();
             // Obsługa przycisku "Następny poziom"
-            // Tu możesz dodać kod obsługi dla przejścia do następnego poziomu
         } else if (e.getSource() == button3) {
             mainMenu();
+            // Obsługa przycisku "Wróć do głównego menu"
         }
     }
 
+    //metoda używana przy "Powtórz poziom"
     public void restart(){
         restartPrepare();
         gp.startGameThread();
     }
 
+    //metoda używana przy "Następny poziom"
     public void startNewLevel(){
         restartPrepare();
         gp.gameLevel++;
         gp.startGameThread();
     }
+
+    //metoda używana przy "Wróć do głównego menu"
     public void mainMenu(){
         restartPrepare();
         LevelSelectionFrame levelSelectionFrame = new LevelSelectionFrame(gp);
@@ -136,6 +135,7 @@ public class BossFrame extends JFrame implements ActionListener {
 
     }
 
+    //metoda używana przy wszystkich 3 wymienionych wyżej metodach - zresetowanie wartosci i przygotowanie do kolejnej gry
     public void restartPrepare(){
         gp.gameStarted = false;
         gp.playerPoints = 1;
