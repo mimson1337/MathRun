@@ -10,9 +10,9 @@ public class Entity {
 
     public static int playerHeight = 80;
 
-    public int speed;
+    public static int speed;
     public BufferedImage rest, left1, left2, right1, right2, straight1, straight2;
-    public String direction;
+    public static String direction;
     public Rectangle solidArea;
     public static boolean collision = false;
 

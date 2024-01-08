@@ -11,7 +11,8 @@ import java.util.Random;
 
 public class Boss extends Entity{
     GamePanel gp;
-    int bossX, bossY;
+    static int bossX, bossY;
+    static String bossDirection;
 
     public Boss(GamePanel gp){
         this.gp =gp;
@@ -21,11 +22,11 @@ public class Boss extends Entity{
         setDefaultBossValues();
         getBossImage();
     }
-    public void setDefaultBossValues(){
+    public static void setDefaultBossValues(){
         bossX = 560;
         bossY = 0;
         //speed = 3;
-        direction = "rest";
+        bossDirection = "rest";
 
     }
 
@@ -44,7 +45,7 @@ public class Boss extends Entity{
 
     public void updateBoss() {
         if(gp.obstacleCount == 10){
-            direction = "run";
+            bossDirection = "run";
             spriteCounter++;
             if(bossY<400) {
                 if (spriteCounter > 3) {
@@ -58,20 +59,23 @@ public class Boss extends Entity{
                     spriteCounter = 0;
                 }
             }
-            else {
-                direction = "rest";
+            else if(bossY==400){
+                bossDirection = "rest";
                 gp.isFinished = true;
-
+                bossY ++;
             }
 
         }
+//        else{
+//            direction = "siema";
+//        }
     };
 
 
     public void drawBoss(Graphics2D g2) {
         BufferedImage image = null;
         if (gp.obstacleCount == 10) {
-            switch (direction) {
+            switch (bossDirection) {
                 case "rest":
                     image = rest;
                     break;

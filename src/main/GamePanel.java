@@ -10,7 +10,7 @@ import java.util.Random;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
 
 
     // SCREEN SETTINGS
@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int tileSize = originalTileSize * scale;
     final int maxScreenCol=16;
     final int maxScreenRow=12;
-    final int screenWidth = tileSize * maxScreenCol; //1280
-    final int screenHeight = tileSize * maxScreenRow; //960
+    public final int screenWidth = tileSize * maxScreenCol; //1280
+    public final int screenHeight = tileSize * maxScreenRow; //960
 
     //FPS
     int FPS = 60;
@@ -130,8 +130,8 @@ public class GamePanel extends JPanel implements Runnable{
 
             }
         if (isFinished) {
-            BossFrame bossFrame = new BossFrame(this, bossPoints, playerPoints);
             isFinished = false;
+            BossFrame bossFrame = new BossFrame(this, bossPoints, playerPoints);
             //window1.add(bossFrame);
             bossFrame.setVisible(true);
             bossFrame.setLocationRelativeTo(null);
