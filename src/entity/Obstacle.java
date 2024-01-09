@@ -21,13 +21,19 @@ public class Obstacle extends Entity {
     String finalEquation;
 
 
-
+    //konstruktor
     public Obstacle(GamePanel gp) {
         this.gp = gp;
         mathObjects = new ArrayList<>();
         setObstacleDefaultValues(this);
     }
 
+
+    /**
+     * metoda z ifem, który wywołuję metodę Player.collidesWith, potrzebna do obliczenia rezultatu operacji matematycznej
+     * @param num
+     * @param eq
+     */
     public void didCollide(double num, String eq) {
         // Sprawdź kolizję z graczem
         for (Obstacle mathObject : mathObjects) {
@@ -37,7 +43,10 @@ public class Obstacle extends Entity {
         }
     }
 
-//ustawienie defaultowych wartosci
+    /**
+     * ustawienie defaultowych wartosci dla Obstacle
+     * @param mathObject
+     */
     public void setObstacleDefaultValues(Obstacle mathObject) {
         ObstacleX = getRandomXPosition();
         ObstacleY = 0;
@@ -48,7 +57,9 @@ public class Obstacle extends Entity {
         mathObjects.add(this);
     }
 
-//metoda opisująca update obiektu spadającego
+    /**
+     * metoda opisująca update obiektu spadającego
+     */
     public void updateObstacle() {
 
         if (gp.gameStarted) {
@@ -72,19 +83,30 @@ public class Obstacle extends Entity {
         }
     }
 
+    /**
+     * metoda generująca losową liczbę
+     * @return
+     */
     public double getRandomNumber() {
-        // Przykładowa metoda generująca losowe równanie matematyczne
         Random random = new Random();
         number = random.nextInt(8) + 2;
         return number;
     }
 
+    /**
+     * metoda spajająca liczbę num oraz string eq, który jest operatorem
+     * @param num
+     * @param eq
+     * @return
+     */
     public String getRandomMathExpression(double num, String eq) {
-        // Przykładowa metoda generująca losowe równanie matematyczne
         return eq + num;
     }
 
-
+    /**
+     * metoda losująca dany operator
+     * @return
+     */
     private String getRandomOperator() {
         // Przykładowa metoda generująca losowy operator matematyczny
         String[] operators = {"+", "-", "*", "/"};
@@ -92,15 +114,21 @@ public class Obstacle extends Entity {
         return operators[random.nextInt(operators.length)];
     }
 
+    /**
+     * Przykładowa metoda generująca losową pozycję X dla obiektu matematycznego w danym zakresie
+     * @return
+     */
     private int getRandomXPosition() {
-        // Przykładowa metoda generująca losową pozycję X dla obiektu matematycznego w danym zakresie
         Random random = new Random();
         int minX = 320; // Minimalna wartość X
         int maxX = 660; // Maksymalna wartość X
         return Math.min(maxX, Math.max(minX, random.nextInt(maxX - minX + 1) + minX));
     }
 
-
+    /**
+     * metoda rysująca obstacle za pomocą Graphics2D
+     * @param g2
+     */
     public void drawObstacle(Graphics2D g2) {
         if (gp.gameStarted) {
             int rectangleWidth = 300;  // Przykładowa szerokość prostokąta
@@ -120,6 +148,12 @@ public class Obstacle extends Entity {
         }
     }
 
+    /**
+     * metoda nadpisująca wartość gp.playerPoints po odpowiednim działaniu matematycznym
+     * @param eq
+     * @param num
+     * @return
+     */
     public double calculateResult(String eq, double num) {
         switch (eq) {
             case "*":

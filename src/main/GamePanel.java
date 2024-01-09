@@ -36,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean isFinished = false; //Czy boss juz skonczył chodzić
 
 
+    /**
+     * Konstruktor klasy GamePanel
+     */
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -45,12 +48,19 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(null);
     }
 
+    /**
+     * startGameThread() - Metoda, zaczynająca wątek
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
 
     }
 
+
+    /**
+     *  bossPointsBound() - metoda przypisująca wartość punktów dla bossa w zależności od poziomu
+     */
     public void bossPointsBound(){
         Random random = new Random();
         int min = 0; // Minimalna wartość X
@@ -72,7 +82,9 @@ public class GamePanel extends JPanel implements Runnable {
         bossPoints = Math.min(max, Math.max(min, random.nextInt(max - min + 1) + min));
     }
 
-    //w run znajduje się głowna pętla gry posiadająca metode update i paintComponent
+    /**
+     * w run znajduje się głowna pętla gry posiadająca metode update i paintComponent
+     */
     @Override
     public void run() {
             double drawInterval = 1000000000 / FPS;
@@ -128,6 +140,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    /**
+     * update() - metoda, która zbiera wszystkie metody update z poszczegolnych klas, wykorzystywana pozniej w run w pętli głównej programu
+     */
     public void update(){
         player.update();
         boss.updateBoss();
@@ -137,6 +152,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    /**
+     * metoda rysująca poszczególne klasy za pomocą Graphics2D
+     * @param g the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;

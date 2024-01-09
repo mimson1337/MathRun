@@ -19,7 +19,9 @@ public class Boss extends Entity{
         getBossImage();
     }
 
-    //defaultowe wartosci dla bossa
+    /**
+     * ustawienie defaultowych wartosci dla bossa
+     */
     public static void setDefaultBossValues(){
         bossX = 560;
         bossY = 0;
@@ -28,7 +30,9 @@ public class Boss extends Entity{
 
     }
 
-    //rysunki bossa potrzebne do animacji(wykorzystane w funkcji drawBoss)
+    /**
+     * rysunki postaci bossa potrzebne do animacji(wykorzystane w funkcji drawBoss)
+     */
     public void getBossImage(){
 
         try{
@@ -41,7 +45,9 @@ public class Boss extends Entity{
         }
     }
 
-    //petla update boss, ktora odpala sie tylko wtedy gdy pojawia sie 10 obiekt (gp.obstacleCount == 10) oraz to w tej petli wykorzystywany jest bool isFinished
+    /**
+     * petla update boss, ktora odpala sie tylko wtedy gdy pojawia sie 10 obiekt (gp.obstacleCount == 10) oraz to w tej petli wykorzystywany jest bool isFinished
+     */
     public void updateBoss() {
         if(gp.obstacleCount == 10){
             bossDirection = "run";
@@ -69,7 +75,10 @@ public class Boss extends Entity{
         }
     };
 
-    //metoda rysowania bossa - w zaleznosci od spriteNum, wyswietlany jest obrazek(podobnie jak w metodzie draw() w klasie Player)
+    /**
+     * metoda rysowania bossa - w zaleznosci od spriteNum, wyswietlany jest obrazek(podobnie jak w metodzie draw() w klasie Player)
+     * @param g2
+     */
     public void drawBoss(Graphics2D g2) {
         BufferedImage image = null;
         if (gp.obstacleCount == 10) {

@@ -21,7 +21,10 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
     }
-//ustawienie defaultowych wartosci dla gracza
+
+    /**
+     * ustawienie defaultowych wartosci dla gracza
+     */
     public static void setDefaultValues(){
         playerX = 600;
         playerY = 800;
@@ -29,7 +32,9 @@ public class Player extends Entity{
         direction = "rest";
     }
 
-    //rysunki gracza potrzebne do animacji
+    /**
+     * Obrazy z postacią gracza potrzebne do animacji
+     */
     public void getPlayerImage(){
 
         try{
@@ -46,12 +51,19 @@ public class Player extends Entity{
         }
     }
 
-public static boolean collidesWith(Obstacle obstacle) {
+    /**
+     * metoda sprawdzająca czy gracz zderza się ze spadającym obiektem
+     * @param obstacle
+     * @return
+     */
+    public static boolean collidesWith(Obstacle obstacle) {
     // Sprawdź czy jest kolizja pomiedzy graczem a obiektem i zwróć true lub false
     return (playerX < obstacle.ObstacleX + 260 && playerX > obstacle.ObstacleX && playerY == obstacle.ObstacleY);
-}
+    }
 
-//update gracza
+    /**
+     * update gracza
+     */
     public void update() {
         //spriteCounterNumber potrzebny do animacji - im mniejszy tym szybciej gracz przebiera nogami
         spriteCounterNumber = switch (gp.gameLevel) {
@@ -162,7 +174,10 @@ public static boolean collidesWith(Obstacle obstacle) {
         }
         };
 
-    //narysowanie interfejsu graficznego podczas rozgrywki
+    /**
+     * narysowanie interfejsu graficznego podczas rozgrywki
+     * @param g2
+     */
     public void imageDraw(Graphics2D g2) {
         BufferedImage imagez;
         try {
@@ -174,7 +189,10 @@ public static boolean collidesWith(Obstacle obstacle) {
         g2.drawImage(imagez, 0, 0, null);
     }
 
-    //petla z rysowaniem i animacja. wykorzystywane sa tu wczesniej wartosci spriteNum oraz uzyto petli switch do okreslenia direction
+    /**
+     * metoda draw z petla switch z rysowaniem i animacja. wykorzystywane sa tu wczesniej wartosci spriteNum oraz uzyto petli switch do okreslenia direction
+     * @param g2
+     */
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         switch (direction){

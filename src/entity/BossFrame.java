@@ -98,7 +98,11 @@ public class BossFrame extends JFrame implements ActionListener {
         setVisible(true);
 
     }
-    //action performed potrzebny do obsługi przycisków
+
+    /**
+     * actionPerformed potrzebny do obsługi przycisków
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button1) {
@@ -113,20 +117,26 @@ public class BossFrame extends JFrame implements ActionListener {
         }
     }
 
-    //metoda używana przy "Powtórz poziom"
+    /**
+     * metoda używana przy "Powtórz poziom"
+     */
     public void restart(){
         restartPrepare();
         gp.startGameThread();
     }
 
-    //metoda używana przy "Następny poziom"
+    /**
+     * metoda używana przy "Następny poziom"
+     */
     public void startNewLevel(){
         restartPrepare();
         gp.gameLevel++;
         gp.startGameThread();
     }
 
-    //metoda używana przy "Wróć do głównego menu"
+    /**
+     * metoda używana przy "Wróć do głównego menu"
+     */
     public void mainMenu(){
         restartPrepare();
         LevelSelectionFrame levelSelectionFrame = new LevelSelectionFrame(gp);
@@ -135,7 +145,9 @@ public class BossFrame extends JFrame implements ActionListener {
 
     }
 
-    //metoda używana przy wszystkich 3 wymienionych wyżej metodach - zresetowanie wartosci i przygotowanie do kolejnej gry
+    /**
+     * metoda używana przy wszystkich 3 metodach związanych z restartowaniem gry - zresetowanie wartosci i przygotowanie do kolejnej gry
+     */
     public void restartPrepare(){
         gp.gameStarted = false;
         gp.playerPoints = 1;

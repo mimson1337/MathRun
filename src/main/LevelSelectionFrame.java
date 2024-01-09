@@ -70,7 +70,10 @@ public class LevelSelectionFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    //actionPerformed wykorzystywany do przyciskow
+    /**
+     * actionPerformed wykorzystywany do działań dla przyciskanych przyciskow
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e) {
         gamePanel.gameLevel = 1; // Domyślnie ustaw poziom na 1
 

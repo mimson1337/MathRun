@@ -12,20 +12,26 @@ public class Background extends Entity {
     BufferedImage road1, road2, road3, road4;
     int worldX, worldY;
     public String road;
+
+    //konstruktor
     public Background(GamePanel gp){
         this.gp =gp;
         setBackgroundDefaultValues();
         getBackgroundImage();
     }
 
-    //ustawienie defaultowych wartosci backgroundu w gamePanel
+    /**
+     * ustawienie defaultowych wartosci backgroundu w gamePanel
+     */
     public void setBackgroundDefaultValues(){
         worldX = 0;
         worldY = 0;
         road = "roadStart";
     }
 
-    //rysunki potrzebne do animacji tła
+    /**
+     * rysunki potrzebne do animacji tła
+     */
     public void getBackgroundImage(){
         try
         {
@@ -40,7 +46,9 @@ public class Background extends Entity {
         }
     }
 
-    //update tła, tak jak wczesniej, spriteCounterNumber wykorzystywany dla różnych poziomów po to, aby animacja zwiększała swoja predkosc wraz z zwiekszana predkoscia faktyczna obiektów spadających
+    /**
+     * update tła, spriteCounterNumber wykorzystywany dla różnych poziomów po to, aby animacja zwiększała swoja predkosc wraz z zwiekszana predkoscia faktyczna obiektów spadających
+     */
      public void updateBackground() {
          spriteCounterNumber = switch (gp.gameLevel) {
              case 1 -> 16;
@@ -70,7 +78,10 @@ public class Background extends Entity {
          }
     }
 
-    //rysowanie tła, znów wykorzystanie buffered image i przede wszystkim spriteNum do animacji
+    /**
+     * rysowanie tła, znów wykorzystanie buffered image i przede wszystkim spriteNum do animacji
+     * @param g2
+     */
     public void drawBackground(Graphics2D g2){
         BufferedImage image = null;
         switch (road){
